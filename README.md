@@ -21,4 +21,6 @@
 # 上传后的Notion示例：
 ![image](https://github.com/user-attachments/assets/7d2f431f-6cf9-4fbc-9b8d-ab67d67bf4b2)
 
+# Notion中的成就进度函数
+if(prop("已解锁成就")/prop("成就总数") == 1, "■■■■■■■■■■ 🏆", if(empty(prop("成就总数")), "此版本无成就", ((substring("■■■■■■■■■■", 0, floor(prop("已解锁成就")/prop("成就总数") *10))  + substring("☐☐☐☐☐☐☐☐☐☐", floor(prop("已解锁成就")/prop("成就总数") *10))+ " ")+ format(round(prop("已解锁成就")/prop("成就总数") *100))) + "%"))
 
