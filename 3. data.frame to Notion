@@ -1,6 +1,9 @@
 # === R/notion_upload.R ===
+# Notion 上传模块（需 Notion API & Database ID）
 
-# Notion 上传模块（需 Notion Token & Database ID）
+notion_token <- "你的Notion Integration Token（API）"
+database_id <- "你的32位Notion Database ID" 
+
 # 包括：Notion已存在页面获取、判断更新/插入、初步判断游戏游玩状态等
 
 #加载依赖
@@ -24,7 +27,7 @@ upload_steam_data_to_notion <- function(df = final_df,
   start_time <- Sys.time()  # ⏱️ 记录开始时间
   
   # 🛠️ 工具函数：将各种字段安全转换为 Notion 所需的格式
-  # 🛠 例如 NULL → 空字符串，或处理成特定 JSON 结构
+  # 🛠️ 例如 NULL → 空字符串，或处理成特定 JSON 结构
   safe_text <- function(x) if (is.null(x) || is.na(x)) "" else as.character(x)
   safe_number <- function(x) {
     if (is.null(x) || is.na(x) || x == "" || (is.character(x) && x %in% c("NA", "null"))) return(NULL)
@@ -205,7 +208,7 @@ upload_steam_data_to_notion <- function(df = final_df,
       `发行商` = safe_text_prop(row$发行商),               	# 文本
       `原价` = safe_text_prop(row$原价),                   	# 文本
       `当前价格` = safe_text_prop(row$当前价格),           	# 文本
-      `当前折扣` = safe_text_prop(row$当前折扣),              	# 文本
+      `当前折扣` = safe_text_prop(row$当前折扣),              # 文本
       `游玩状态` = safe_status_prop(status),              	# 状态
       `商店标签` = safe_multi_select_prop(row$商店标签),   	# 多选
       `内容类型` = safe_select_prop(row$内容类型),         	# 选择
@@ -317,3 +320,23 @@ upload_steam_data_to_notion <- function(df = final_df,
   cli_alert_success(glue::glue("所有游戏上传完成 🎉 用时：{mins} 分 {secs} 秒"))
   
 }
+
+# ==== 🧪 上传测试 ====
+# 以自己的游戏数量为准
+df_test <- rbind(head(final_df,20), #前20行
+                 final_df[380:400, ], #第380行-400行
+                 tail(final_df, 20)) #最后20行
+
+upload_steam_data_to_notion(
+  df = df_test,
+  database_id = database_id,
+  token = notion_token
+)
+
+# ==== 🫣正式上传 ====
+upload_steam_data_to_notion(
+  df = final_df,
+  database_id = database_id,
+  token = notion_token
+)
+
