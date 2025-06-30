@@ -28,7 +28,8 @@
 
 # 上传后的Notion示例：
 - ![image](https://github.com/user-attachments/assets/7d2f431f-6cf9-4fbc-9b8d-ab67d67bf4b2)
-- ![image](https://github.com/user-attachments/assets/831c56f6-77f0-448c-a96e-410118531271)
+- ![image](https://github.com/user-attachments/assets/bd57ccf0-f967-4690-a503-5b2fee14ddda)
+
 
 
 ## Notion中的成就进度函数
