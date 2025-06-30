@@ -15,12 +15,18 @@
 - 可导出 Excel / 上传 Notion / CLI 进度提示
 
 # 上传状态展示：
+## 若Notion中无该游戏（根据appid判断），则插入新页面
 - ![image (3)](https://github.com/user-attachments/assets/8eebddab-5b39-491f-acc5-5392c03e19b5)
+## 若该游戏已存在，则更新update_fields()中的内容
 - ![image](https://github.com/user-attachments/assets/595b9173-ec6d-4d3b-a594-8ff5aa950501)
+## 若该数据来源仅为网页，则不更新其游玩时间
+- ![image (4)](https://github.com/user-attachments/assets/65b548b0-fef3-4b86-a5fa-d6f86ec0ada5)
+## 支持仅上传游戏本体（不上传DLC、原声音轨等）
+- ![image (1)](https://github.com/user-attachments/assets/5e14a902-faee-4084-a529-f1914ebfdbdf)
 
 # 上传后的Notion示例：
 ![image](https://github.com/user-attachments/assets/7d2f431f-6cf9-4fbc-9b8d-ab67d67bf4b2)
 
-# Notion中的成就进度函数
+## Notion中的成就进度函数
 if(prop("已解锁成就")/prop("成就总数") == 1, "■■■■■■■■■■ 🏆", if(empty(prop("成就总数")), "此版本无成就", ((substring("■■■■■■■■■■", 0, floor(prop("已解锁成就")/prop("成就总数") *10))  + substring("☐☐☐☐☐☐☐☐☐☐", floor(prop("已解锁成就")/prop("成就总数") *10))+ " ")+ format(round(prop("已解锁成就")/prop("成就总数") *100))) + "%"))
 
