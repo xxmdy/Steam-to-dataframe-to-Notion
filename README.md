@@ -23,6 +23,9 @@
 - ![image (4)](https://github.com/user-attachments/assets/65b548b0-fef3-4b86-a5fa-d6f86ec0ada5)
 ## 支持仅上传游戏本体（不上传DLC、原声音轨等）
 - ![image (1)](https://github.com/user-attachments/assets/5e14a902-faee-4084-a529-f1914ebfdbdf)
+## 支持跳过对非游戏本体（如DLC等）的更新
+- ![image](https://github.com/user-attachments/assets/060a7ede-7707-4179-b004-a6cc1d30e534)
+
 
 # 上传后的Notion示例：
 ![image](https://github.com/user-attachments/assets/7d2f431f-6cf9-4fbc-9b8d-ab67d67bf4b2)
