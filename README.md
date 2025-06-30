@@ -1,5 +1,5 @@
-# 借助了ChatGPT的帮助
 # Steam-to-dataframe-to-Notion
+## 借助了ChatGPT的帮助
 自动抓取你的 Steam 游戏库信息，并上传至 Notion 数据库，包括游戏时长、成就、价格、商店标签、封面图等字段。
 
 ## 特性 Features
