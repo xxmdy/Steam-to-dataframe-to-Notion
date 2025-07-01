@@ -184,7 +184,7 @@ upload_steam_data_to_notion <- function(df = final_df,
     
     # 如果设置只上传游戏本体，则跳过 DLC/原声等
     if (only_main_game && !is_main_game) {
-      cli_alert_info("⏩ [{i}/{total}] 跳过DLC和原声音轨：{game_name} ({game_id_str})")
+      cli_alert_info("⏩ [{i}/{total}] 跳过DLC、试玩版和原声音轨：{game_name} ({game_id_str})")
       cli_progress_update(id = progress_id, set = i)
       next
     } 
