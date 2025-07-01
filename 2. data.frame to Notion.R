@@ -1,8 +1,8 @@
 # === R/notion_upload.R ===
 # Notion 上传模块（需 Notion API & Database ID）
 
-notion_token <- "你的Notion Integration Token（API）"
-database_id <- "你的32位Notion Database ID" 
+notion_token <- "你的Notion Integration Token（API），保留双引号"
+database_id <- "你的32位Notion Database ID，保留双引号" 
 
 # 包括：Notion已存在页面获取、判断更新/插入、初步判断游戏游玩状态等
 
