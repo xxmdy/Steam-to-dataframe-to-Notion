@@ -4,8 +4,8 @@
 # 包括：API 抓取、网页抓取、商店信息、成就信息等函数
 
 # Steam API和Steam ID配置
-API_key <- "你的32位Steam API"
-steam_id <- "你的17位Steam ID"
+API_key <- "你的32位Steam API，保留双引号"
+steam_id <- "你的17位Steam ID，保留双引号"
 
 # 加载依赖
 library(httr2) # 网络请求相关
