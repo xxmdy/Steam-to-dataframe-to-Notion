@@ -1,4 +1,4 @@
-# 🎮 获取拥有的游戏列表（支持 API Key 和 Steam ID）
+# ==== 获取拥有的游戏列表（支持 API Key 和 Steam ID）====
 get_owned_games <- function(API_key, steam_id) {
   
   url <- paste0("https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=",
@@ -26,7 +26,7 @@ get_owned_games <- function(API_key, steam_id) {
   return(df)
 }
 
-# 🔍 使用 XML 页面方式抓取完整游戏列表（适配静态网页）
+# ==== 使用 XML 页面方式抓取完整游戏列表（适配静态网页）====
 # 推荐使用官方 API 获取游玩时间和最后游玩时间（get_owned_games）
 get_all_games_web <- function(user_id = steam_id) {
   
@@ -63,7 +63,7 @@ get_all_games_web <- function(user_id = steam_id) {
   return(df)
 }
 
-# 🈴 合并网页与 API 获取的游戏列表
+# ==== 合并网页与 API 获取的游戏列表 ====
 merge_api_and_web_games <- function(api_games, web_games) {
   write.csv(api_games, "E:/api_games_debug.csv", row.names = FALSE)
   write.csv(web_games, "E:/web_games_debug.csv", row.names = FALSE)
@@ -95,7 +95,7 @@ merge_api_and_web_games <- function(api_games, web_games) {
   return(combined)
 }
 
-# 🏆 获取成就信息
+# ==== 获取成就信息 ====
 get_achievements <- function(appid) {
   # 构建 API 请求 URL
   url <- paste0("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=",
@@ -114,7 +114,7 @@ get_achievements <- function(appid) {
   bind_rows(achs)
 }
 
-# 🏪 获取商店信息 
+# ==== 获取商店信息 ====
 get_store_info <- function(appid) {
   
   # 辅助函数：根据地区与语言抓取数据
@@ -226,7 +226,7 @@ get_store_info <- function(appid) {
     appid, region, price_origin))
 }
 
-# 📦 主流程封装函数
+# ==== 主流程封装函数 ====
 fetch_and_merge_all_games <- function(api_key = API_key, user_id = steam_id) {
   message("📦 正在获取 Steam 游戏数据...")
   api_games <- tryCatch({
@@ -246,7 +246,7 @@ games <- fetch_and_merge_all_games() # 获得API+网页抓取数据
 games <- distinct(games, appid, .keep_all = TRUE) #去掉重复（若有）
 result <- list()
 
-# ==== 📊 主处理逻辑 ====
+# ==== 主处理逻辑 ====
 # 如果担心出错的话可以先跑21行试试，用test替换下面的games
 # 例如：games_test <- games[30:50, ] #选取第20行-50行的数据
 
@@ -319,11 +319,22 @@ for (i in seq_len(nrow(games))) {
   Sys.sleep(1)
 }
 
-# 合并
+# 合并（单个账户）
 # 这个final_df也是后面用来上传Notion所需要的数据
 final_df <- bind_rows(result) 
 
 # 💾 导出 Excel
 # 保存在E盘，可以根据自己需求修改保存位置
 # 若手动导入Notion，请将Excel文件另存为CSV格式
-write.xlsx(final_df, file = "E:/Steam Data.xlsx", encoding = "UTF-8") 
+write.xlsx(final_df, file = "Steam Data.xlsx", encoding = "UTF-8") 
+
+# 合并（假设现在有两个账户的数据）
+# 这个final_df也是后面用来上传Notion所需要的数据
+final_df1 <- bind_rows(result1) 
+final_df2 <- bind_rows(result2) 
+
+# 💾 导出 Excel 进行备份
+# 可以根据自己需求修改保存位置，比如保存在E盘"E:/Steam Data1.xlsx"
+# 若手动导入Notion，请将Excel文件另存为CSV格式
+write.xlsx(final_df1, file = "Steam Data1.xlsx", encoding = "UTF-8") 
+write.xlsx(final_df2, file = "Steam Data2.xlsx", encoding = "UTF-8")                        
