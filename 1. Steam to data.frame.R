@@ -1,27 +1,3 @@
-# === R/steam_fetch.R ===
-
-# Steam 游戏数据抓取模块
-# 包括：API 抓取、网页抓取、商店信息、成就信息等函数
-
-# Steam API和Steam ID配置
-API_key <- "你的32位Steam API，保留双引号"
-steam_id <- "你的17位Steam ID，保留双引号"
-
-# 加载依赖
-library(httr2) # 网络请求相关
-library(httr) # 网络请求相关
-library(rvest) # 网页和 XML 解析
-library(xml2) # 网页和 XML 解析
-library(dplyr) # 数据处理
-library(tibble) # 数据处理
-library(jsonlite) # 数据处理
-library(lubridate) # 时间处理
-library(openxlsx) # Excel 导出
-
-# ⚠️需要梯子：设置 HTTP 代理（适用于 Clash / Surge）
-Sys.setenv(http_proxy = "http://127.0.0.1:7890", # Clash的默认设置，根据自己的代理地址改
-           https_proxy = "http://127.0.0.1:7890") # Clash的默认设置，根据自己的代理地址改
-
 # 🎮 获取拥有的游戏列表（支持 API Key 和 Steam ID）
 get_owned_games <- function(API_key, steam_id) {
   
