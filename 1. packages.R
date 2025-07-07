@@ -19,7 +19,5 @@ library(lubridate) # 时间处理
 library(openxlsx) # Excel 导出
 
 # ==== 将导出数据上传至Notion所需要的包（如果只想手动导入，可不加载） ====
-library(httr)  # 网络请求相关     
-library(jsonlite)  # 数据处理  
 library(cli)  # 命令行美化输出       
 library(glue)  # 字符串拼接（提示消息、上传状态）
