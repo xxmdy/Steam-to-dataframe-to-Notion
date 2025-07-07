@@ -152,7 +152,7 @@ notion_utils <- function(safe) {
       `游戏ID` = safe$safe_number_prop(row$游戏ID),           # 数字类型
       `游玩时间` = safe$safe_text_prop(row$游玩时间),         # 文本类型
       `总时长/h` = safe$safe_number_prop(row$总时长小时),     # 数字类型
-      `总成就数` = safe$safe_number_prop(row$成就总数),       # 数字类型
+      `成就总数` = safe$safe_number_prop(row$成就总数),       # 数字类型
       `已解锁成就` = safe$safe_number_prop(row$已解锁成就),   # 数字类型
       `开发商` = safe$safe_text_prop(row$开发商),             # 文本类型
       `发行商` = safe$safe_text_prop(row$发行商),             # 文本类型
