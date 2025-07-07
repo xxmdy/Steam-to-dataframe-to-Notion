@@ -1,7 +1,4 @@
-# 配置信息
-notion_token <- "你的Notion API，保留双引号" # 以防前面忘记赋值（若已输入，可无视）
-database_id <- "你的32位Notion Database ID，保留双引号" # 以防前面忘记赋值（若已输入，可无视）
-
+# 全局参数
 insert_fields_global <- NULL  # NULL 表示全部上传
 			      # 若要插入指定字段，请将NULL修改为c("要插入的字段1", "要插入的字段2", ...)
  			      # 例如：c("名称", "游戏ID", "游戏状态", "时长", "封面")
