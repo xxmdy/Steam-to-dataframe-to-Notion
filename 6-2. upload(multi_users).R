@@ -15,6 +15,7 @@ run_upload_loop(
   df = df_all_test,
   database_id = database_id,
   token = notion_token,
+  insert_fields = insert_fields_global,
   update_fields = update_fields_global,
   is_main_game = is_main_game_global,
   skip_playtime_web = skip_playtime_web_global
@@ -29,6 +30,7 @@ run_upload_loop(
   df = df_all,
   database_id = database_id,
   token = notion_token,
+  insert_fields = insert_fields_global,
   update_fields = update_fields_global,
   is_main_game = is_main_game_global,
   skip_playtime_web = skip_playtime_web_global
