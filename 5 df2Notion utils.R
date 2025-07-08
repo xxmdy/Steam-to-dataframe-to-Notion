@@ -562,11 +562,21 @@ run_upload_loop <- function(df, database_id, token,
       display_name <- if (nchar(game_name) > 30) paste0(substr(game_name, 1, 27), "…") else game_name
       
       
-      # 特殊处理：如果为“免费开玩”游戏，自动设置价格为“免费”
+      # 如果为“免费开玩”游戏，且当前价格未知或为 0 元，则自动设置为“免费”
       if (grepl("免费开玩", safe$safe_text(row$商店标签))) {
-        row$原价 <- "免费"
-        row$当前价格 <- "免费"
-        row$当前折扣 <- NULL
+        price_str <- safe$safe_text(row$当前价格)
+        price_str_clean <- trimws(tolower(price_str))  # 去除空格并小写化
+        price_num <- suppressWarnings(as.numeric(gsub("[^0-9.]", "", price_str)))
+        
+        # 如果当前价格是“未知”或 NA 或空字符串 或数值为 0，就认为是免费试玩
+        if (is.null(price_str_clean) ||
+            price_str_clean %in% c("", "未知", "na") ||
+            is.na(price_num) || price_num == 0) {
+          
+          row$原价 <- "免费"
+          row$当前价格 <- "免费"
+          row$当前折扣 <- NULL
+        }
       }
       
       # 自动判断游戏游玩状态
