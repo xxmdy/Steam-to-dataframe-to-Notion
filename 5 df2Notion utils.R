@@ -140,6 +140,19 @@ status_utils <- function(safe) {
   return(list(get_game_status = get_game_status))
 }
 
+# 判断免费游戏
+is_free_game <- function(row) {
+  price <- safe$safe_text(row$当前价格)
+  price_clean <- trimws(tolower(price))
+  price_num <- suppressWarnings(as.numeric(gsub("[^0-9.]", "", price)))
+  
+  return(
+    is.null(price_clean) ||
+    price_clean %in% c("", "未知", "na") ||
+    is.na(price_num) || price_num == 0
+  )
+}
+
 # Notion 属性构造函数
 notion_utils <- function(safe) {
   build_notion_props <- function(row, status = NULL,
@@ -562,21 +575,11 @@ run_upload_loop <- function(df, database_id, token,
       display_name <- if (nchar(game_name) > 30) paste0(substr(game_name, 1, 27), "…") else game_name
       
       
-      # 如果为“免费开玩”游戏，且当前价格未知或为 0 元，则自动设置为“免费”
-      if (grepl("免费开玩", safe$safe_text(row$商店标签))) {
-        price_str <- safe$safe_text(row$当前价格)
-        price_str_clean <- trimws(tolower(price_str))  # 去除空格并小写化
-        price_num <- suppressWarnings(as.numeric(gsub("[^0-9.]", "", price_str)))
-        
-        # 如果当前价格是“未知”或 NA 或空字符串 或数值为 0，就认为是免费试玩
-        if (is.null(price_str_clean) ||
-            price_str_clean %in% c("", "未知", "na") ||
-            is.na(price_num) || price_num == 0) {
-          
-          row$原价 <- "免费"
-          row$当前价格 <- "免费"
-          row$当前折扣 <- NULL
-        }
+      # 如果当前价格是“未知”或 NA 或空字符串 或数值为 0，就认为是免费试玩
+      if (is_free_game(row)) {
+	row$原价 <- "免费"
+	row$当前价格 <- "免费"
+	row$当前折扣 <- NULL
       }
       
       # 自动判断游戏游玩状态
