@@ -114,6 +114,21 @@ get_achievements <- function(appid) {
   bind_rows(achs)
 }
 
+# 获取封面
+get_cover_url <- function(appid) {
+  base <- "https://cdn.cloudflare.steamstatic.com/steam/apps/"
+  urls <- c(
+    paste0(base, appid, "/capsule_616x353.jpg"), # 更适配Notion画廊
+    paste0(base, appid, "/header.jpg")  # 备用
+  )
+  
+  for (url in urls) {
+    res <- httr::HEAD(url)
+    if (httr::status_code(res) == 200) return(url)
+  }
+  return(NA)  # 都找不到，返回 NA
+}
+                  
 # ==== 获取商店信息 ====
 get_store_info <- function(appid) {
   
@@ -188,9 +203,9 @@ get_store_info <- function(appid) {
   }, error = function(e) NA_character_)
   
   # 提取其余字段
-  dev       <- tryCatch(data$developers[[1]], error = function(e) NA) #开发商
-  pub       <- tryCatch(data$publishers[[1]], error = function(e) NA) #发行商
-  released  <- tryCatch(data$release_date$date, error = function(e) NA) #发售日期
+  dev <- tryCatch(paste(data$developers, collapse = ", "), error = function(e) NA) #开发商
+  pub <- tryCatch(paste(data$publishers, collapse = ", "), error = function(e) NA) #发行商
+  released <- tryCatch(data$release_date$date, error = function(e) NA) #发售日期
   
   # 获取价格和币种
   price_initial <- tryCatch(data$price_overview$initial, error = function(e) NA) #原价
@@ -285,7 +300,7 @@ for (i in seq_len(nrow(games))) {
   }
   
   store <- get_store_info(appid)
-  cover_url <- paste0("https://cdn.cloudflare.steamstatic.com/steam/apps/", appid, "/header.jpg")
+  cover_url <- get_cover_url(appid)
   cn_name <- if (!is.null(store[[8]]) && !is.na(store[[8]])) store[[8]] else game$name
   en_name <- if (!is.null(game$name) && !is.na(game$name) && grepl("[A-Za-z]", game$name) && (is.null(store[[8]]) || is.na(store[[8]]) || store[[8]] != game$name)) game$name else NA_character_
   
